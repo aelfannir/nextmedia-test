@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string("name");
             $table->string("description");
             $table->unsignedFloat("price");
-            $table->string("image");
+            $table->string("image")->default("default.png");
         });
     }
 

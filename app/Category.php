@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-
+    protected $fillable = ['name','parent_id'];
+    public $timestamps = false;
 
     /* Relationships */
     public function parent() {
@@ -22,12 +23,5 @@ class Category extends Model
         return $this->belongsToMany(Product::class,'product_categories');
     }
 
-    /* Closures */
-    protected static function booted()
-    {
-        static::creating(function ($project) {
-            dd($project->categories);
-        });
-    }
 
 }
