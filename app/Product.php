@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\Types\This;
 class Product extends Model
 {
     public $timestamps = false;
+    protected $fillable = ['name','description','price','image'];
 
     /* Relationships */
     public function categories()
