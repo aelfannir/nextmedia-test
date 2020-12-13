@@ -17,20 +17,4 @@ class Product extends Model
         return $this->belongsToMany(Category::class,'product_categories');
     }
 
-    /* Closures */
-    protected static function booted()
-    {
-        Pivot::saving(function($pivot) {
-            dd("aaaa");
-        });
-        static::creating(function ($project) {
-//            $this->categories->
-//            dd($project->categories()->count());
-            //todo: belongs to 0..2 categories
-        });
-    }
-
-
-
-
 }
