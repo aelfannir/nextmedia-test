@@ -10,14 +10,18 @@ class ProductService extends Service
      * @var array
      */
     public $save_validation_rules = [
-        'name' => ['required','max:255']
+        'name' => ['required','max:255'],
+        'description'=> ['required','max:255'],
+        'price'=> ['required','numeric','gt:0'],
     ];
 
     /**
      * @var array
      */
     protected $update_validation_rules = [
-        'name' => ['max:255']
+        'name' => ['max:255'],
+        'description'=> ['max:255'],
+        'price'=> ['numeric','gt:0'],
     ];
 
     /**
