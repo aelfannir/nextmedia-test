@@ -6,7 +6,7 @@ Please check the official laravel installation guide before you start. [Official
 
 Clone the repository
 
-    `git clone https://github.com/aelfannir/nextmedia-test.git`
+    git clone https://github.com/aelfannir/nextmedia-test.git
 
 Switch to the repo folder
 
@@ -28,7 +28,7 @@ Start the local development server
 
     php artisan serve
 
-## CLI
+## CLI Features
 
 * **Category**
     * Create: `php artisan category:create`
