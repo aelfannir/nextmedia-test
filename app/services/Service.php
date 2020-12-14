@@ -106,7 +106,7 @@ class Service
      */
     public function update(array $data, $id)
     {
-        $validator = Validator::make($data, $this->getSaveValidationRules());
+        $validator = Validator::make($data, $this->getUpdateValidationRules());
 
         if ($validator->fails()) {
             throw new InvalidArgumentException($validator->errors()->first());

@@ -5,6 +5,7 @@ namespace App\repositories;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 class Repository
@@ -61,8 +62,14 @@ class Repository
      */
     public function update(array $data, $id)
     {
-        $model = $this->where('id',$id);
+
+        $model = $this->find($id);
+        if(!$model){
+            throw new ModelNotFoundException();
+        }
+
         $model->update($data);
+
         return $model;
     }
 

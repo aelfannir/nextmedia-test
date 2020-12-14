@@ -10,6 +10,7 @@ class Product extends Model
 {
     public $timestamps = false;
     protected $fillable = ['name','description','price','image'];
+    protected $with = ['categories'];
 
     /* Relationships */
     public function categories()

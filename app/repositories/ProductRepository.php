@@ -5,8 +5,6 @@ namespace App\repositories;
 
 
 use App\Product;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class ProductRepository extends Repository
 {

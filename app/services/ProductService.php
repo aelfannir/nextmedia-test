@@ -4,6 +4,7 @@ namespace App\services;
 
 use App\Repositories\ProductRepository;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ class ProductService extends Service
         'name' => ['required','max:255'],
         'description'=> ['required','max:255'],
         'price'=> ['required','numeric','gt:0'],
+//        'image' => ['image']
     ];
 
     /**
@@ -48,7 +50,7 @@ class ProductService extends Service
         $image = Arr::get($data, 'image');
 
         if($image){
-            if($image instanceof File){
+            if($image instanceof File || $image instanceof UploadedFile){
                 Storage::putFile('public/products', $image);
                 Arr::set($data,'image',$image->hashName());
             }
@@ -59,18 +61,51 @@ class ProductService extends Service
         $product = parent::save($data);
 
         // Attaching categories
-        if(Arr::has($data, 'categories_ids') && is_array($ids = Arr::get($data,'categories_ids'))){
+        $ids = Arr::get($data, 'categories_ids');
+
+        if($ids){
+            if(is_string($ids)) $ids = json_decode($ids);
             // belongsTo 0..2
-            $product->categories()->attach(array_slice($ids,1,2));
+            $product->categories()->attach(array_slice($ids,0,2));
         }
 
         return $product;
     }
 
+    /** Save model.
+     *
+     * @param array $data
+     * @param $id
+     * @return Collection
+     */
     public function update(array $data, $id)
     {
-        //TODO belongsTo 0..2
-        return parent::update($data, $id);
+        /* FIXME duplication */
+        $image = Arr::get($data, 'image');
+
+        if($image){
+            if($image instanceof File || $image instanceof UploadedFile){
+                Storage::putFile('public/products', $image);
+                Arr::set($data,'image',$image->hashName());
+            }
+        }else{
+            Arr::forget($data, 'image');
+        }
+        /* END duplication*/
+
+        $product = parent::update($data, $id);
+
+        $ids = Arr::get($data, 'categories_ids');
+
+        if($ids){
+            if(is_string($ids)) $ids = json_decode($ids);
+
+            // belongsTo 0..2
+            $product->categories()->sync(array_slice($ids,0,2));
+        }
+
+        return $product;
+
     }
 
 }

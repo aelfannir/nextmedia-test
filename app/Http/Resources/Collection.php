@@ -15,7 +15,7 @@ class Collection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $meta = $request->get('meta', []);
+        $meta = json_decode($request->get('meta'), true);
         $data = $this->collection;
 
         //Sort
@@ -23,14 +23,6 @@ class Collection extends ResourceCollection
             $sortField = Arr::get($meta,  'sort.field', 'id');
             $sortAsc = Arr::get($meta,  'sort.asc', true);
             $data = $data->sortBy($sortField, null,!$sortAsc);
-        }
-
-        //Filters, { category_id: 5, ... }
-        if(Arr::has($meta, 'filters')){
-            $filters = data_get($meta,"filters",[]);
-            foreach ($filters as $filterKey=>$filterValue){
-                $data = $data->where($filterKey, "=",$filterValue);
-            }
         }
 
         return $data->toArray();
