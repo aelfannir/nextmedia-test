@@ -12,7 +12,7 @@ Switch to the repo folder
 
     cd nextmedia-test
     
-Install all the dependencies using composer
+Install backend dependencies using composer
 
     composer install
 
@@ -23,6 +23,14 @@ Copy the example env file and make the required configuration changes in the .en
 Run the database migrations (**Set the database connection in .env before migrating**)
 
     php artisan migrate
+    
+Install frontend dependencies using composer
+
+    npm install
+    
+Build assets
+
+    npm run dev
     
 Start the local development server
 

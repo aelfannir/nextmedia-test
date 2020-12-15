@@ -1,6 +1,6 @@
 /node_modules
 /public/hot
-/public/storage
+#/public/storage
 /storage/*.key
 /vendor
 .env
@@ -12,3 +12,9 @@ npm-debug.log
 yarn-error.log
 /.idea
 _ide_*
+
+#Laravel Mix build artifacts
+/public/js
+/public/css
+/public/build
+/public/mix-manifest.json
