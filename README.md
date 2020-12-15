@@ -45,3 +45,40 @@ Start the local development server
 * **Product**
     * Create: `php artisan product:create`
     * Delete: `php artisan product:delete`
+
+
+----------
+# Testing
+## Automated tests
+
+    vendor\bin\phpunit --testsuite=Feature
+
+
+## API test
+
+Run the laravel development server
+
+    php artisan serve
+
+The api can now be accessed at
+
+    http://localhost:8000/api
+    
+Available routes
+
+    http://localhost:8000/api
+
+Request headers
+
+| **Method**| **URI**           | **Description**       |
+|----------	|------------------	|-----------------------|
+| POST      | `/categories`     | Create new Category   |
+| GET/HEAD  | `/categories`     | Get all Categories    |
+| GET/HEAD  | `/categories/{id}`| Get a Category by id  |
+| PUT/PATCH | `/categories/{id}`| Update Category by id |
+| DELETE    | `/categories/{id}`| Delete Category by id |
+| POST      | `/products`       | Create new Product    |
+| GET/HEAD  | `/products`       | Get all Products      |
+| GET/HEAD  | `/products/{id}`  | Get a Product by id   |
+| PUT/PATCH | `/products/{id}`  | Update Product by id  |
+| DELETE    | `/products/{id}`  | Delete Product by id  |

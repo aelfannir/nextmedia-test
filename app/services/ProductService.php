@@ -104,7 +104,7 @@ class ProductService extends Service
             $product->categories()->sync(array_slice($ids,0,2));
         }
 
-        return $product;
+        return $product->fresh();
 
     }
 
