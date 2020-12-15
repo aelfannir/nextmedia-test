@@ -66,10 +66,6 @@ The api can now be accessed at
     
 Available routes
 
-    http://localhost:8000/api
-
-Request headers
-
 | **Method**| **URI**           | **Description**       |
 |----------	|------------------	|-----------------------|
 | POST      | `/categories`     | Create new Category   |
