@@ -25,6 +25,7 @@
                         <th>
                             Categories
                             <select v-model="meta.filters.category_id">
+                                <option />
                                 <option v-for="category in categories" v-bind:value="category.id">
                                     {{ category.name }}
                                 </option>
@@ -58,8 +59,6 @@
                     <td>
                         <textarea v-model="model.description" rows="4" />
                     </td>
-
-
                     <td>
                         <button v-on:click="saveProduct">{{model.id ? 'Update':'Create'}}</button>
                         <button v-on:click="reset">Reset</button>
@@ -67,7 +66,12 @@
                 </tr>
                 <tr v-for="product in products" v-bind:key="product.id">
                     <td>
-                        <img v-bind:src="'./storage/products/'+product.image" width="100" height="60">
+                        <img
+                            v-bind:src="`./storage/products/${product.image ? '/'+product.id+'/'+product.image : 'default.png'}`"
+                            width="100"
+                            height="60"
+                            alt=""
+                        >
                     </td>
                     <td>{{ product.name }}</td>
                     <td>{{ product.price }}</td>
@@ -87,10 +91,9 @@
 </template>
 <script>
 
+    import {deleteProduct, getProduct, getProducts, saveProduct, updateProduct} from "./axios/products";
+    import {getCategories} from "./axios/categories";
 
-    import {deleteProduct, getCategories, getProduct, getProducts, saveProduct, updateProduct} from "./app";
-    // const default_layout = "default";
-    const prefix = "/products";
     const defaultModel = ()=>{
         return {
             id:undefined,
@@ -103,9 +106,8 @@
     };
 
 
-
     export default {
-        computed: {},
+        computed: { },
         watch:{
           meta: {
               handler: function () {
