@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +18,6 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::apiResource('products','ProductController');
-Route::apiResource('categories','CategoryController');
+Route::apiResource('products','Product\ProductController');
+Route::apiResource('categories','Category\CategoryController');
 

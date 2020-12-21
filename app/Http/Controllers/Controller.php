@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Collection;
-use App\services\Service;
+use App\Services\AppService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,29 +12,41 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
+/**
+ * Class Controller
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
+    /**
+     * @var AppService
+     */
     public $service;
+
+    /**
+     * @var string
+     */
     public $collection = Collection::class;
 
     /**
      * Controller constructor.
-     * @param Service $service
+     * @param AppService $service
      */
-    public function __construct(Service $service)
+    public function __construct(AppService $service)
     {
         $this->service = $service;
     }
 
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         return response(
             new $this->collection($this->service->all())
@@ -44,59 +57,57 @@ class Controller extends BaseController
      * get the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function show(int $id)
+    public function show(int $id): Response
     {
         $model = $this->service->find($id);
-        return response(
-            $model,
-            $model ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
+        $status = $model ? Response::HTTP_OK : Response::HTTP_NOT_FOUND;
+
+        return response($model, $status);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
-        return response(
-            $this->service->save($request->all()),
-            Response::HTTP_CREATED
-        );
+        $savedModel = $this->service->save($request->all());
+
+        return response($savedModel, Response::HTTP_CREATED);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     * @throws \Throwable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): Response
     {
         $model = $this->service->update($request->all(), $id);
-        return response(
-            $model,
-            $model ? Response::HTTP_ACCEPTED : Response::HTTP_NOT_FOUND
-        );
-    }
+        $status = $model ? Response::HTTP_ACCEPTED : Response::HTTP_NOT_FOUND;
 
+        return response($model, $status);
+    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
+     * @throws \Throwable
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
-        $model = $this->service->delete($id);
-        return response(
-            null,
-            $model ? Response::HTTP_NO_CONTENT : Response::HTTP_NOT_FOUND
-        );
+        $deleted = $this->service->delete($id);
+        $status = $deleted ? Response::HTTP_NO_CONTENT : Response::HTTP_NOT_FOUND;
+
+        return response(null, $status );
     }
 }

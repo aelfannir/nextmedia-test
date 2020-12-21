@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 _ide_*
+.phpstorm.meta.php
 
 #Laravel Mix build artifacts
 /public/js

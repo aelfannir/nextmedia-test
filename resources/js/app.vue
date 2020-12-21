@@ -51,7 +51,7 @@
                         <input type="number" v-model="model.price" />
                     </td>
                     <td>
-                        <select v-model="model.categories_ids" multiple >
+                        <select v-model="model.categoriesIds" multiple >
                             <option v-bind:value="category.id" v-for="category in categories">{{category.name}}</option>
                         </select>
                     </td>
@@ -98,7 +98,7 @@
             description: '',
             price: 0,
             image: undefined,
-            categories_ids: [],
+            categoriesIds: [],
         }
     };
 
@@ -151,7 +151,7 @@
                     location.href = "#form"
                     const {id, description, name, price, categories  } = response.data;
 
-                    this.model = { id, description, name, price, categories_ids:categories.map(c=>c.id) }
+                    this.model = { id, description, name, price, categoriesIds:categories.map(c=>c.id) }
                 })
             },
             saveProduct: function () {
