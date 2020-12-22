@@ -5,6 +5,7 @@ namespace App\Repositories\Category;
 
 use App\Category;
 use App\Repositories\AppRepository;
+use Illuminate\Support\Collection;
 
 /**
  * Class CategoryAppRepository
@@ -21,5 +22,15 @@ class CategoryRepository extends AppRepository
         parent::__construct($category);
     }
 
-
+    /**
+     * Get all of the models from the database.
+     *
+     * @param array|mixed $columns
+     * @param array $relations
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function all($columns = ['*'], $relations = [])
+    {
+        return Category::all();
+    }
 }

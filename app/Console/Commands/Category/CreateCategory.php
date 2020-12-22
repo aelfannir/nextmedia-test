@@ -29,13 +29,13 @@ class CreateCategory extends CategoryCommand
      */
     public function handle()
     {
-        $data = [];
+        $attributes = [];
         $attributes['name'] = $this->ask('Name');
 
         $categories = $this->categoryService->all(['id','name']);
         $attributes['parent_id'] = $this->askForChoice('Parent category', $categories);
 
-        $this->categoryService->save($data);
+        $this->categoryService->save($attributes);
         $this->info("Saved !");
     }
 }

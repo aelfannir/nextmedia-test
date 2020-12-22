@@ -24,7 +24,8 @@ class CategoryCommand extends AppCommand
      */
     public function __construct(CategoryService $categoryService)
     {
-        $this->categoryService = $categoryService;
         parent::__construct();
+
+        $this->categoryService = $categoryService;
     }
 }

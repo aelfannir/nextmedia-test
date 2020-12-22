@@ -21,15 +21,14 @@ class ApiRequest
     public function handle($request, Closure $next)
     {
         if ($request->has('meta')) {
-
             if (is_string($request->get('meta'))) {
-                $meta = json_decode($request->get('meta'), true);
+                $meta = json_decode($request->get('meta'), true); // {}
                 $request->merge(['meta'=>$meta]);
             }
         }
 
         if ($request->has('categoriesIds') && is_string($request->categoriesIds)) {
-            $ids = json_decode($request->categoriesIds);
+            $ids = json_decode($request->categoriesIds);// '[1,2]'
             $request->merge(['categoriesIds'=>$ids]);
         }
 
